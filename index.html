@@ -470,22 +470,58 @@
             font-size: 13px;
         }
 
-            .point-list ol,
-            .area-list ol,
-            .operation-history ol {
-                padding-left: 0;
+        .collapsible-list {
+            border: 1px solid rgb(209, 213, 219);
+            border-radius: 10px;
+            background-color: rgb(249, 250, 251);
+            overflow: hidden;
+        }
+
+            .collapsible-list > summary {
+                padding: 12px;
+                cursor: pointer;
+                font-weight: 600;
+                color: rgb(55, 65, 81);
+                background-color: rgb(249, 250, 251);
+                list-style: none;
+                user-select: none;
+            }
+
+                .collapsible-list > summary::-webkit-details-marker {
+                    display: none;
+                }
+
+                .collapsible-list > summary::before {
+                    content: "▶";
+                    display: inline-block;
+                    margin-right: 8px;
+                    font-size: 11px;
+                }
+
+            .collapsible-list[open] > summary {
+                border-bottom: 1px solid rgb(229, 231, 235);
+            }
+
+                .collapsible-list[open] > summary::before {
+                    content: "▼";
+                }
+
+            .collapsible-list ol {
+                margin: 0;
+                padding: 10px;
                 list-style: none;
                 overflow: auto;
+                background-color: rgb(255, 255, 255);
             }
 
-            .point-list ol {
-                max-height: 360px;
-            }
+        .point-list ol {
+            max-height: 360px;
+        }
 
-            .area-list ol,
-            .operation-history ol {
-                max-height: 260px;
-            }
+        .area-list ol,
+        .operation-history ol {
+            max-height: 260px;
+        }
 
         .area-item,
         .point-item,
@@ -670,6 +706,26 @@
                 grid-template-columns: 1fr;
             }
 
+            .map-column {
+                display: contents;
+            }
+
+            .map-wrapper {
+                order: 1;
+            }
+
+            .panel {
+                order: 2;
+            }
+
+            .address-search-box {
+                order: 3;
+            }
+
+            .tool-description {
+                order: 4;
+            }
+
             #map {
                 height: 520px;
             }
@@ -730,6 +786,7 @@
                 <p>地図データ表示：OpenStreetMap、地理院タイル</p>
                 <p>住所検索：国土地理院 住所検索API</p>
                 <p>現在地取得：ブラウザ Geolocation API</p>
+                <p>タッチ・マウス操作：Pointer Events</p>
                 <p>検索履歴・比較対象保存：localStorage</p>
                 <p>結果コピー：Clipboard API</p>
                 <p>面積・周囲計算：Turf.js</p>
@@ -1172,20 +1229,20 @@
 
             <button id="copyResultButton" class="copy-button" type="button" disabled>結果をコピー</button>
 
-            <div class="area-list">
-                <strong>設定済みの範囲</strong>
+            <details class="area-list collapsible-list">
+                <summary>設定済みの範囲</summary>
                 <ol id="areaList"></ol>
-            </div>
+            </details>
 
-            <div class="point-list">
-                <strong>現在選択中の点</strong>
+            <details class="point-list collapsible-list">
+                <summary>現在選択中の点</summary>
                 <ol id="pointList"></ol>
-            </div>
+            </details>
 
-            <div class="operation-history">
-                <strong>操作履歴</strong>
+            <details class="operation-history collapsible-list">
+                <summary>操作履歴</summary>
                 <ol id="operationHistoryList"></ol>
-            </div>
+            </details>
         </aside>
     </main>
 
