@@ -290,7 +290,8 @@
 
         .utility-button-row,
         .mode-row,
-        .comparison-button-row {
+        .comparison-button-row,
+        .selection-data-button-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
@@ -358,15 +359,55 @@
                 background-color: rgb(217, 119, 6);
             }
 
-        .copy-button {
+        .result-action-buttons {
+            display: grid;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .copy-button,
+        .csv-button {
             width: 100%;
-            margin-top: 8px;
+            margin: 0;
+        }
+
+        .copy-button {
             background-color: rgb(22, 163, 74);
         }
 
             .copy-button:hover:not(:disabled) {
                 background-color: rgb(21, 128, 61);
             }
+
+        .csv-button {
+            background-color: rgb(8, 145, 178);
+        }
+
+            .csv-button:hover:not(:disabled) {
+                background-color: rgb(14, 116, 144);
+            }
+
+        .selection-data-section {
+            margin: 0;
+        }
+
+        .selection-data-button-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+            .selection-data-button-row button {
+                width: 100%;
+                min-width: 0;
+            }
+
+        .selection-data-message {
+            margin-top: 8px;
+            color: rgb(75, 85, 99);
+            font-size: 12px;
+            line-height: 1.6;
+        }
 
         label {
             display: block;
@@ -418,6 +459,14 @@
 
         .comparison-manage-message {
             margin-top: 8px;
+        }
+
+        .selection-data-box {
+            margin-top: 8px;
+            padding: 10px;
+            border: 1px solid rgb(229, 231, 235);
+            border-radius: 10px;
+            background-color: rgb(249, 250, 251);
         }
 
         .accuracy-note {
@@ -556,6 +605,28 @@
             margin-top: 6px;
             padding: 7px 8px;
             font-size: 13px;
+        }
+
+        .area-color-row {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            align-items: center;
+            margin-top: 8px;
+            padding: 7px 8px;
+            border: 1px solid rgb(229, 231, 235);
+            border-radius: 8px;
+            background-color: rgb(255, 255, 255);
+            color: rgb(55, 65, 81);
+            font-size: 12px;
+        }
+
+        .area-color-input {
+            width: 48px;
+            height: 32px;
+            padding: 2px;
+            border-radius: 6px;
+            cursor: pointer;
         }
 
         .area-item-detail,
@@ -789,6 +860,8 @@
                 <p>タッチ・マウス操作：Pointer Events</p>
                 <p>検索履歴・比較対象保存：localStorage</p>
                 <p>結果コピー：Clipboard API</p>
+                <p>CSV・選択データ出力：Blob、File API</p>
+                <p>選択データ読み込み：FileReader</p>
                 <p>面積・周囲計算：Turf.js</p>
             </div>
         </div>
@@ -813,72 +886,8 @@
                             <p>
                                 複数の範囲を選択した場合は、単純な合計だけでなく、重なっている部分を二重計算しない面積も計算できます。
                             </p>
-                        </div>
-                    </details>
-
-                    <details class="guide-section">
-                        <summary>地図の表示とレイヤ切り替え</summary>
-                        <div class="guide-section-body">
                             <p>
-                                地図左上の「地図レイヤ切り替え」から、表示する地図を変更できます。
-                            </p>
-                            <p>
-                                OpenStreetMap、地理院地図 標準、地理院地図 淡色、地理院 写真を切り替えられます。
-                            </p>
-                            <p>
-                                通常の道路や建物を見たい場合はOpenStreetMapや地理院地図 標準、航空写真に近い見た目で確認したい場合は地理院 写真を使います。
-                            </p>
-                            <p>
-                                拡大・縮小は地図右下のズームボタンやマウスホイールで操作できます。
-                            </p>
-                        </div>
-                    </details>
-
-                    <details class="guide-section">
-                        <summary>住所検索と現在地移動</summary>
-                        <div class="guide-section-body">
-                            <p>
-                                地図の下にある「住所検索・現在地移動」から、住所を入力して検索できます。
-                            </p>
-                            <p>
-                                住所は、都道府県から始まる具体的な住所を入力してください。例として「兵庫県神戸市中央区北野町1-1-8」のように入力します。
-                            </p>
-                            <p>
-                                「検索」を押すと、国土地理院の住所検索APIを使って住所候補を表示します。
-                            </p>
-                            <p>
-                                「もしかして次の住所ですか？」と表示された候補を選ぶと、その場所へ地図が移動し、検索マーカーが表示されます。
-                            </p>
-                            <p>
-                                「現在地へ移動」を押すと、ブラウザの位置情報取得機能を使って現在地へ移動します。
-                            </p>
-                            <p>
-                                位置情報の利用を許可しなかった場合や取得できなかった場合は、神戸電子専門学校付近を表示します。
-                            </p>
-                            <p>
-                                「検索マーカーを消す」で住所検索のマーカーを削除できます。
-                                「現在地マーカーを消す」で現在地マーカーを削除できます。
-                            </p>
-                        </div>
-                    </details>
-
-                    <details class="guide-section">
-                        <summary>住所検索履歴</summary>
-                        <div class="guide-section-body">
-                            <p>
-                                住所検索で選択した住所は、住所検索履歴に保存されます。
-                            </p>
-                            <p>
-                                履歴の住所を押すと、もう一度その場所へ移動できます。
-                            </p>
-                            <p>
-                                履歴は最大8件まで保存されます。新しい履歴が上に表示され、古い履歴は順番に消えます。
-                            </p>
-                            <p>
-                                「履歴を消す」を押すと、保存されている住所検索履歴をすべて削除できます。
-                            </p>
-                            <p>
-                                住所検索履歴はブラウザのlocalStorageに保存されます。そのため、同じブラウザで開いた場合は次回も残ります。
+                                範囲ごとの名前や色の変更、計算結果のコピーやCSV出力、選択データの保存・読み込みにも対応しています。
                             </p>
                         </div>
                     </details>
@@ -908,7 +917,7 @@
                         <summary>ドラッグ選択</summary>
                         <div class="guide-section-body">
                             <p>
-                                「ドラッグ選択」を選ぶと、マウスを押しながら地図上をなぞることで、線を描くように範囲を選択できます。
+                                「ドラッグ選択」を選ぶと、マウスや指で地図上をなぞることで、線を描くように範囲を選択できます。
                             </p>
                             <p>
                                 ドラッグ中は連続した点が自動で追加されます。
@@ -962,13 +971,16 @@
                                 この時点では、最終的な計算結果はまだ表示されません。
                             </p>
                             <p>
-                                設定済みの範囲は、地図上にポリゴンとして表示されます。
+                                設定済みの範囲は、地図上に色付きのポリゴンとして表示されます。
                             </p>
                             <p>
                                 複数の場所をまとめて計算したい場合は、1つ目の範囲を作って「次の範囲を設定」、2つ目の範囲を作って「次の範囲を設定」という流れで進めます。
                             </p>
                             <p>
                                 最後の範囲は「次の範囲を設定」を押さず、そのまま「エリア確定」を押しても計算に含まれます。
+                            </p>
+                            <p>
+                                新しく作成した範囲には、範囲ごとに異なる初期色が自動で設定されます。
                             </p>
                         </div>
                     </details>
@@ -993,6 +1005,9 @@
                             </p>
                             <p>
                                 周囲についても、範囲別の周囲合計と、重なり除外後の周囲が異なる場合は両方を表示します。
+                            </p>
+                            <p>
+                                エリア確定後は範囲の追加や点の編集が停止します。編集を再開する場合は、設定済み範囲の「編集」または操作履歴を使用してください。
                             </p>
                         </div>
                     </details>
@@ -1022,6 +1037,163 @@
                     </details>
 
                     <details class="guide-section">
+                        <summary>範囲ごとの色変更</summary>
+                        <div class="guide-section-body">
+                            <p>
+                                「設定済みの範囲」にあるカラーピッカーを使うと、範囲ごとに地図上の色を変更できます。
+                            </p>
+                            <p>
+                                カラーピッカーを押して好きな色を選ぶと、地図上の枠線と塗りつぶし色がすぐに変更されます。
+                            </p>
+                            <p>
+                                色を変更しても、範囲の面積、周囲、座標は変更されません。
+                            </p>
+                            <p>
+                                変更した色は、地図上のポリゴン、範囲のポップアップ、結果のコピー内容、CSVファイルに反映されます。
+                            </p>
+                            <p>
+                                選択データをJSONファイルとして保存した場合は、範囲の色も保存されます。
+                            </p>
+                            <p>
+                                色変更は操作履歴にも記録されるため、「ひとつ戻る」や「ここへ戻る」で以前の色に戻せます。
+                            </p>
+                            <p>
+                                範囲を編集状態に戻した場合も、設定していた色は保持されます。
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="guide-section">
+                        <summary>操作履歴とひとつ戻る</summary>
+                        <div class="guide-section-body">
+                            <p>
+                                点追加、点編集、点削除、ドラッグ追加、範囲設定、範囲編集、範囲削除、範囲名変更、範囲色変更、エリア確定などの操作は、操作履歴に保存されます。
+                            </p>
+                            <p>
+                                「ひとつ戻る」を押すと、操作履歴を1つ前の状態に戻します。
+                            </p>
+                            <p>
+                                操作履歴の「ここへ戻る」を押すと、その時点の状態へ直接戻れます。
+                            </p>
+                            <p>
+                                現在の状態には「現在位置」と表示されます。
+                            </p>
+                            <p>
+                                過去の履歴へ戻ったあとに新しい操作をすると、その先の履歴は消えて新しい履歴に置き換わります。
+                            </p>
+                            <p>
+                                操作履歴は最大80件まで保存されます。
+                            </p>
+                            <p>
+                                操作履歴はページを再読み込みすると消えます。また、JSONファイルには保存されません。
+                            </p>
+                            <p>
+                                選択データを読み込んだ場合は、読み込んだ状態から新しい操作履歴が開始されます。
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="guide-section">
+                        <summary>リセット</summary>
+                        <div class="guide-section-body">
+                            <p>
+                                「リセット」を押すと、現在選択中の点、設定済みの範囲、計算結果、操作履歴をすべて削除します。
+                            </p>
+                            <p>
+                                リセット前には確認メッセージが表示されます。
+                            </p>
+                            <p>
+                                リセットすると、範囲名や範囲色など、現在の選択内容に関係する情報も削除されます。
+                            </p>
+                            <p>
+                                住所検索履歴やlocalStorageに保存した比較対象は、リセットしても消えません。
+                            </p>
+                            <p>
+                                すでにダウンロードしたJSONファイルやCSVファイルも、リセットでは削除されません。
+                            </p>
+                            <p>
+                                住所検索履歴を消したい場合は、住所検索欄の「履歴を消す」を使ってください。
+                            </p>
+                            <p>
+                                保存済みの比較対象を消したい場合は、比較対象を選んで「選択中を削除」を使ってください。
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="guide-section">
+                        <summary>地図の表示とレイヤ切り替え</summary>
+                        <div class="guide-section-body">
+                            <p>
+                                地図左上の「地図レイヤ切り替え」から、表示する地図を変更できます。
+                            </p>
+                            <p>
+                                OpenStreetMap、地理院地図 標準、地理院地図 淡色、地理院 写真を切り替えられます。
+                            </p>
+                            <p>
+                                通常の道路や建物を見たい場合はOpenStreetMapや地理院地図 標準、航空写真に近い見た目で確認したい場合は地理院 写真を使います。
+                            </p>
+                            <p>
+                                拡大・縮小は地図右下のズームボタンやマウスホイールで操作できます。
+                            </p>
+                            <p>
+                                選択データを保存した場合は、保存時に使用していた地図レイヤ、地図の中心位置、拡大率も記録されます。
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="guide-section">
+                        <summary>住所検索と現在地移動</summary>
+                        <div class="guide-section-body">
+                            <p>
+                                地図の下にある「住所検索・現在地移動」から、住所を入力して検索できます。
+                            </p>
+                            <p>
+                                住所は、都道府県から始まる具体的な住所を入力してください。例として「兵庫県神戸市中央区北野町1-1-8」のように入力します。
+                            </p>
+                            <p>
+                                「検索」を押すと、国土地理院の住所検索APIを使って住所候補を表示します。
+                            </p>
+                            <p>
+                                「もしかして次の住所ですか？」と表示された候補を選ぶと、その場所へ地図が移動し、検索マーカーが表示されます。
+                            </p>
+                            <p>
+                                「現在地へ移動」を押すと、ブラウザの位置情報取得機能を使って現在地へ移動します。
+                            </p>
+                            <p>
+                                位置情報の利用を許可しなかった場合や取得できなかった場合は、神戸電子専門学校付近を表示します。
+                            </p>
+                            <p>
+                                「検索マーカーを消す」で住所検索のマーカーを削除できます。
+                                「現在地マーカーを消す」で現在地マーカーを削除できます。
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="guide-section">
+                        <summary>住所検索履歴</summary>
+                        <div class="guide-section-body">
+                            <p>
+                                住所検索で選択した住所は、住所検索履歴に保存されます。
+                            </p>
+                            <p>
+                                履歴の住所を押すと、もう一度その場所へ移動できます。
+                            </p>
+                            <p>
+                                履歴は最大8件まで保存されます。新しい履歴が上に表示され、古い履歴は順番に消えます。
+                            </p>
+                            <p>
+                                「履歴を消す」を押すと、保存されている住所検索履歴をすべて削除できます。
+                            </p>
+                            <p>
+                                住所検索履歴はブラウザのlocalStorageに保存されます。そのため、同じブラウザで開いた場合は次回も残ります。
+                            </p>
+                            <p>
+                                住所検索履歴は、選択データのJSONファイルには含まれません。
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="guide-section">
                         <summary>比較対象の選択</summary>
                         <div class="guide-section-body">
                             <p>
@@ -1035,6 +1207,9 @@
                             </p>
                             <p>
                                 比較対象を変更すると、エリア確定後の結果も自動で再計算されます。
+                            </p>
+                            <p>
+                                選択中の比較対象は、選択データをJSONファイルとして保存するときにも記録されます。
                             </p>
                         </div>
                     </details>
@@ -1058,7 +1233,10 @@
                                 保存した比較対象はブラウザのlocalStorageに保存されます。そのため、同じブラウザで開いた場合は次回も残ります。
                             </p>
                             <p>
-                                別のブラウザや別の端末では、保存した比較対象は共有されません。
+                                別のブラウザや別の端末では、localStorageに保存した比較対象は共有されません。
+                            </p>
+                            <p>
+                                選択データを読み込んだとき、ファイル内の比較対象が現在のブラウザに存在しない場合は、「その他」として名前と面積を復元します。
                             </p>
                         </div>
                     </details>
@@ -1070,7 +1248,10 @@
                                 エリア確定後、「結果をコピー」ボタンを押すと、計算結果をテキストとしてコピーできます。
                             </p>
                             <p>
-                                コピー内容には、範囲数、面積、㎢、坪、ha、周囲、比較対象換算、範囲別一覧、注意書きが含まれます。
+                                コピー内容には、範囲数、面積、㎢、坪、ha、周囲、比較対象換算、範囲別一覧、範囲色、注意書きが含まれます。
+                            </p>
+                            <p>
+                                コピーした内容は、メモ帳、文書、メール、レポートなどに貼り付けられます。
                             </p>
                             <p>
                                 ブラウザの設定などで自動コピーが使えない場合は、コピー用のテキストが表示されるので、手動でコピーしてください。
@@ -1079,46 +1260,85 @@
                     </details>
 
                     <details class="guide-section">
-                        <summary>操作履歴とひとつ戻る</summary>
+                        <summary>結果をCSV出力</summary>
                         <div class="guide-section-body">
                             <p>
-                                点追加、点編集、点削除、ドラッグ追加、範囲設定、範囲編集、範囲削除、エリア確定などの操作は、操作履歴に保存されます。
+                                エリア確定後、「結果をCSV出力」ボタンを押すと、計算結果をCSVファイルとしてダウンロードできます。
                             </p>
                             <p>
-                                「ひとつ戻る」を押すと、操作履歴を1つ前の状態に戻します。
+                                CSVファイルには、重なりを除外した合計結果と、設定済みの各範囲の個別結果が出力されます。
                             </p>
                             <p>
-                                操作履歴の「ここへ戻る」を押すと、その時点の状態へ直接戻れます。
+                                出力項目には、区分、番号、範囲名、範囲色、面積㎡、面積㎢、坪、ha、周囲、点数、選択方法などが含まれます。
                             </p>
                             <p>
-                                現在の状態には「現在位置」と表示されます。
+                                複数範囲に重なりがある場合は、単純合計面積と重なり分もCSVに出力されます。
                             </p>
                             <p>
-                                過去の履歴へ戻ったあとに新しい操作をすると、その先の履歴は消えて新しい履歴に置き換わります。
+                                CSVファイルは、Microsoft ExcelやGoogleスプレッドシートなどで開けます。
                             </p>
                             <p>
-                                操作履歴は最大80件まで保存されます。
+                                日本語が文字化けしにくいように、UTF-8形式で出力されます。
+                            </p>
+                            <p>
+                                CSV出力は計算結果の確認用です。選択した点を後から編集できる形式ではありません。
                             </p>
                         </div>
                     </details>
 
                     <details class="guide-section">
-                        <summary>リセット</summary>
+                        <summary>選択データの保存</summary>
                         <div class="guide-section-body">
                             <p>
-                                「リセット」を押すと、現在選択中の点、設定済みの範囲、計算結果、操作履歴をすべて削除します。
+                                点または範囲が存在すると、「選択データを保存」ボタンを押せるようになります。
                             </p>
                             <p>
-                                リセット前には確認メッセージが表示されます。
+                                「選択データを保存」を押すと、現在の選択内容をJSONファイルとしてダウンロードできます。
                             </p>
                             <p>
-                                住所検索履歴や保存済みの比較対象は、リセットしても消えません。
+                                保存される内容には、現在選択中の点、設定済みの範囲、範囲名、範囲色、クリック選択かドラッグ選択か、エリア確定状態などが含まれます。
                             </p>
                             <p>
-                                住所検索履歴を消したい場合は、住所検索欄の「履歴を消す」を使ってください。
+                                地図の中心位置、拡大率、選択している地図レイヤ、比較対象も保存されます。
                             </p>
                             <p>
-                                保存済みの比較対象を消したい場合は、比較対象を選んで「選択中を削除」を使ってください。
+                                保存したJSONファイルは、ブラウザのlocalStorageではなく、パソコンや端末のダウンロード先に保存されます。
+                            </p>
+                            <p>
+                                JSONファイルを別の端末へ移動すれば、別の端末でも同じ選択データを読み込めます。
+                            </p>
+                            <p>
+                                操作履歴、住所検索履歴、現在地マーカー、検索マーカー、保存済み比較対象の一覧はJSONファイルには含まれません。
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="guide-section">
+                        <summary>選択データの読み込み</summary>
+                        <div class="guide-section-body">
+                            <p>
+                                「選択データを読み込み」を押すと、保存済みのJSONファイルを選択できます。
+                            </p>
+                            <p>
+                                正しい形式のファイルを選ぶと、保存時の点、範囲、名前、色、地図位置、地図レイヤ、比較対象などが復元されます。
+                            </p>
+                            <p>
+                                エリア確定済みの状態で保存したファイルを読み込むと、面積や周囲を再計算して結果を表示します。
+                            </p>
+                            <p>
+                                確定前の状態で保存したファイルを読み込むと、点や範囲を引き続き編集できます。
+                            </p>
+                            <p>
+                                読み込み前に現在の点や範囲がある場合は、置き換えてよいか確認メッセージが表示されます。
+                            </p>
+                            <p>
+                                読み込みを実行すると、現在の点、設定済み範囲、計算結果、操作履歴は、ファイルの内容に置き換えられます。
+                            </p>
+                            <p>
+                                読み込み直後の状態が、新しい操作履歴の開始位置になります。
+                            </p>
+                            <p>
+                                このアプリ以外で作成したJSONファイルや、内容を不正に変更したファイルは読み込めない場合があります。
                             </p>
                         </div>
                     </details>
@@ -1130,13 +1350,25 @@
                                 住所検索履歴と保存済みの比較対象は、ブラウザのlocalStorageに保存されます。
                             </p>
                             <p>
-                                ページを閉じても、同じブラウザで開き直せば残ります。
+                                localStorageに保存されたデータは、同じブラウザでページを開き直した場合も残ります。
                             </p>
                             <p>
-                                ただし、ブラウザのデータ削除、シークレットモード、別端末、別ブラウザでは保存内容が残らない場合があります。
+                                ブラウザのデータ削除、シークレットモード、別端末、別ブラウザでは、localStorageの内容が残らない場合があります。
                             </p>
                             <p>
-                                選択中の点、設定済みの範囲、操作履歴、計算結果は、ページを再読み込みすると消えます。
+                                現在選択中の点、設定済みの範囲、範囲名、範囲色、計算結果、操作履歴は、自動ではlocalStorageに保存されません。
+                            </p>
+                            <p>
+                                現在の選択内容を残したい場合は、ページを閉じる前に「選択データを保存」を押してJSONファイルをダウンロードしてください。
+                            </p>
+                            <p>
+                                JSONファイルには、点、範囲、範囲名、範囲色、地図位置、地図レイヤ、比較対象などが保存されます。
+                            </p>
+                            <p>
+                                CSVファイルには計算結果が保存されますが、後から範囲を編集するための全座標データは保存されません。
+                            </p>
+                            <p>
+                                用途に応じて、編集を再開したい場合はJSON、表として確認したい場合はCSVを使用してください。
                             </p>
                         </div>
                     </details>
@@ -1152,6 +1384,9 @@
                             </p>
                             <p>
                                 建物の境界線、土地の境界線、道路境界などを正確に取得しているわけではありません。
+                            </p>
+                            <p>
+                                複雑に交差した線や非常に細かい形状では、ポリゴンの補正や結合によって想定と異なる結果になる場合があります。
                             </p>
                             <p>
                                 測量、登記、境界確認、不動産取引、法的判断などには使用できません。
@@ -1227,7 +1462,24 @@
 
             <div id="result" class="result">まだ面積は計算されていません。</div>
 
-            <button id="copyResultButton" class="copy-button" type="button" disabled>結果をコピー</button>
+            <div class="result-action-buttons">
+                <button id="copyResultButton" class="copy-button" type="button" disabled>結果をコピー</button>
+
+                <button id="exportCsvButton" class="csv-button" type="button" disabled>結果をCSV出力</button>
+
+                <div class="selection-data-section">
+                    <div class="selection-data-button-row">
+                        <button id="saveSelectionDataButton" class="secondary" type="button" disabled>選択データを保存</button>
+                        <button id="loadSelectionDataButton" class="secondary" type="button">選択データを読み込み</button>
+                    </div>
+
+                    <input id="selectionDataFileInput" type="file" accept=".json,application/json" hidden />
+
+                    <div id="selectionDataMessage" class="selection-data-message">
+                        保存したJSONファイルは、別の端末やブラウザでも読み込めます。
+                    </div>
+                </div>
+            </div>
 
             <details class="area-list collapsible-list">
                 <summary>設定済みの範囲</summary>
@@ -1258,9 +1510,23 @@
 
         const addressHistoryStorageKey = 'howLargeIsThisAreaAddressHistory';
         const comparisonTargetStorageKey = 'howLargeIsThisAreaComparisonTargets';
+        const selectionDataVersion = 1;
         const maxAddressHistoryCount = 8;
         const maxOperationHistoryCount = 80;
         const minDrawDistanceMeters = 2;
+
+        const defaultAreaColors = [
+            '#2563eb',
+            '#16a34a',
+            '#9333ea',
+            '#f59e0b',
+            '#dc2626',
+            '#0891b2',
+            '#db2777',
+            '#4f46e5',
+            '#65a30d',
+            '#ea580c'
+        ];
 
         const pointMarkerIcon = L.divIcon({
             className: 'point-marker-icon',
@@ -1332,6 +1598,7 @@
         let activeDrawPointerId = null;
         let currentDragPointCount = 0;
         let currentAreaHasDragPoint = false;
+        let currentAreaColor = null;
 
         let addressMarker = null;
         let currentLocationMarker = null;
@@ -1352,6 +1619,11 @@
         const undoButton = document.getElementById('undoButton');
         const resetButton = document.getElementById('resetButton');
         const copyResultButton = document.getElementById('copyResultButton');
+        const exportCsvButton = document.getElementById('exportCsvButton');
+        const saveSelectionDataButton = document.getElementById('saveSelectionDataButton');
+        const loadSelectionDataButton = document.getElementById('loadSelectionDataButton');
+        const selectionDataFileInput = document.getElementById('selectionDataFileInput');
+        const selectionDataMessage = document.getElementById('selectionDataMessage');
 
         const result = document.getElementById('result');
         const pointList = document.getElementById('pointList');
@@ -1406,6 +1678,15 @@
         clearAddressMarkerButton.addEventListener('click', clearAddressMarker);
         clearAddressHistoryButton.addEventListener('click', clearAddressHistory);
         copyResultButton.addEventListener('click', copyResultToClipboard);
+        exportCsvButton.addEventListener('click', exportResultToCsv);
+        saveSelectionDataButton.addEventListener('click', saveSelectionDataToFile);
+
+        loadSelectionDataButton.addEventListener('click', function () {
+            selectionDataFileInput.value = '';
+            selectionDataFileInput.click();
+        });
+
+        selectionDataFileInput.addEventListener('change', handleSelectionDataFileSelected);
 
         map.on('click', function (e) {
             if (isAllConfirmed || isDraggingPoint || selectionMode !== 'click') {
@@ -1473,6 +1754,20 @@
             return `${formatResultNumber(valueM)} m`;
         }
 
+        function normalizeAreaColor(value) {
+            const color = String(value || '').trim();
+
+            if (/^#[0-9a-fA-F]{6}$/.test(color)) {
+                return color.toLowerCase();
+            }
+
+            return defaultAreaColors[0];
+        }
+
+        function getDefaultAreaColor(index) {
+            return defaultAreaColors[index % defaultAreaColors.length];
+        }
+
         function resetOperationTimeline(label) {
             operationTimeline.length = 0;
             historyPointer = -1;
@@ -1526,6 +1821,7 @@
                 markerFlags: markers.map(marker => marker !== null),
                 fixedAreas: fixedAreas.map(area => ({
                     name: area.name,
+                    color: area.color,
                     points: area.points.map(p => ({ lat: p.lat, lng: p.lng })),
                     markerFlags: area.markerFlags.map(flag => flag),
                     selectionMode: area.selectionMode,
@@ -1538,6 +1834,7 @@
                 selectionMode: selectionMode,
                 lastSelectionMode: lastSelectionMode,
                 currentAreaHasDragPoint: currentAreaHasDragPoint,
+                currentAreaColor: currentAreaColor,
                 lastAreaM2: lastAreaM2,
                 lastSimpleAreaM2: lastSimpleAreaM2,
                 lastOverlapAreaM2: lastOverlapAreaM2,
@@ -1560,6 +1857,7 @@
             selectionMode = snapshot.selectionMode || 'click';
             lastSelectionMode = snapshot.lastSelectionMode || 'click';
             currentAreaHasDragPoint = snapshot.currentAreaHasDragPoint || false;
+            currentAreaColor = snapshot.currentAreaColor ? normalizeAreaColor(snapshot.currentAreaColor) : null;
             isDrawing = false;
             isDraggingPoint = false;
             activeDrawPointerId = null;
@@ -1610,21 +1908,24 @@
             const fixedFeatureCollection = createFeatureCollectionForCurrentArea(areaPoints);
             const areaM2 = calculateFeatureCollectionArea(fixedFeatureCollection);
             const perimeterM = calculateFeatureCollectionPerimeterM(fixedFeatureCollection);
+            const areaColor = normalizeAreaColor(areaData.color || getDefaultAreaColor(areaIndex));
 
             const polygonLayer = L.geoJSON(fixedFeatureCollection, {
-                style: createAreaStyle(isFinalArea)
+                style: createAreaStyle(areaColor, isFinalArea)
             }).addTo(map);
 
             const areaName = areaData.name || `範囲${areaIndex + 1}`;
 
             polygonLayer.bindPopup(
                 `${escapeHtml(areaName)}<br>` +
+                `色: ${escapeHtml(areaColor)}<br>` +
                 `面積: ${formatResultNumber(areaM2)} ㎡<br>` +
                 `周囲: ${formatLength(perimeterM)}`
             );
 
             return {
                 name: areaName,
+                color: areaColor,
                 points: areaPoints,
                 markerFlags: areaData.markerFlags.map(flag => flag),
                 selectionMode: areaData.selectionMode || 'click',
@@ -1751,6 +2052,7 @@
 
         function switchBaseLayer(layerName) {
             if (layerName === currentBaseLayerName) {
+                updateLayerSwitcherRadios();
                 return;
             }
 
@@ -1767,6 +2069,13 @@
 
             nextLayer.addTo(map);
             currentBaseLayerName = layerName;
+            updateLayerSwitcherRadios();
+        }
+
+        function updateLayerSwitcherRadios() {
+            document.querySelectorAll('input[name="baseMapLayer"]').forEach(radio => {
+                radio.checked = radio.value === currentBaseLayerName;
+            });
         }
 
         async function searchAddress() {
@@ -2010,7 +2319,7 @@
 
             if (!navigator.geolocation) {
                 if (isInitialDisplay) {
-                   addressSearchMessage.textContent = 'このブラウザでは現在地取得に対応していないため、神戸電子専門学校付近を表示しています。';
+                    addressSearchMessage.textContent = 'このブラウザでは現在地取得に対応していないため、神戸電子専門学校付近を表示しています。';
                 } else {
                     addressSearchMessage.textContent = 'このブラウザでは現在地取得に対応していません。';
                 }
@@ -2474,7 +2783,7 @@
             releaseSelectionMode();
 
             fixedAreas.forEach(area => {
-                area.polygonLayer.setStyle(createAreaStyle(true));
+                area.polygonLayer.setStyle(createAreaStyle(area.color, true));
             });
 
             updateCalculatedTotals();
@@ -2493,19 +2802,22 @@
             const perimeterM = calculateFeatureCollectionPerimeterM(fixedFeatureCollection);
             const areaIndex = fixedAreas.length;
             const areaName = `範囲${areaIndex + 1}`;
+            const areaColor = normalizeAreaColor(currentAreaColor || getDefaultAreaColor(areaIndex));
 
             const polygonLayer = L.geoJSON(fixedFeatureCollection, {
-                style: createAreaStyle(isFinalArea)
+                style: createAreaStyle(areaColor, isFinalArea)
             }).addTo(map);
 
             polygonLayer.bindPopup(
                 `${escapeHtml(areaName)}<br>` +
+                `色: ${escapeHtml(areaColor)}<br>` +
                 `面積: ${formatResultNumber(areaM2)} ㎡<br>` +
                 `周囲: ${formatLength(perimeterM)}`
             );
 
             return {
                 name: areaName,
+                color: areaColor,
                 points: areaPoints,
                 markerFlags: markers.map(marker => marker !== null),
                 selectionMode: selectionMode === 'none' ? lastSelectionMode : selectionMode,
@@ -2712,12 +3024,14 @@
             lastUniquePerimeterM = uniquePerimeterM;
         }
 
-        function createAreaStyle(isFinalArea) {
+        function createAreaStyle(areaColor, isFinalArea) {
+            const normalizedColor = normalizeAreaColor(areaColor);
+
             return {
-                color: isFinalArea ? 'rgb(22, 163, 74)' : 'rgb(245, 158, 11)',
-                weight: 4,
-                fillColor: isFinalArea ? 'rgb(34, 197, 94)' : 'rgb(251, 191, 36)',
-                fillOpacity: 0.25
+                color: normalizedColor,
+                weight: isFinalArea ? 4 : 3,
+                fillColor: normalizedColor,
+                fillOpacity: isFinalArea ? 0.30 : 0.22
             };
         }
 
@@ -2750,6 +3064,7 @@
             points.length = 0;
             markers.length = 0;
             currentAreaHasDragPoint = false;
+            currentAreaColor = null;
 
             if (lineLayer) {
                 map.removeLayer(lineLayer);
@@ -2801,12 +3116,13 @@
 
             fixedAreas.forEach(area => {
                 if (area.polygonLayer) {
-                    area.polygonLayer.setStyle(createAreaStyle(false));
+                    area.polygonLayer.setStyle(createAreaStyle(area.color, false));
                 }
             });
 
             clearCurrentSelection();
             currentAreaHasDragPoint = editingArea.wasDragArea || false;
+            currentAreaColor = normalizeAreaColor(editingArea.color);
 
             editingArea.points.forEach((p, pointIndex) => {
                 const latlng = L.latLng(p.lat, p.lng);
@@ -2906,6 +3222,7 @@
             activeDrawPointerId = null;
             currentDragPointCount = 0;
             currentAreaHasDragPoint = false;
+            currentAreaColor = null;
 
             setSelectionMode(lastSelectionMode);
 
@@ -2915,6 +3232,7 @@
             updateModeOverlay();
 
             result.innerHTML = 'まだ面積は計算されていません。';
+            selectionDataMessage.textContent = '選択内容をリセットしました。保存済みのJSONファイルは削除されません。';
             resetOperationTimeline('リセット後');
         }
 
@@ -2937,6 +3255,7 @@
             const hasEnoughCurrentPoints = points.length >= 3;
             const hasFixedAreas = fixedAreas.length > 0;
             const hasIncompleteCurrentArea = points.length > 0 && points.length < 3;
+            const hasSelectionData = points.length > 0 || fixedAreas.length > 0;
 
             nextAreaButton.disabled = !hasEnoughCurrentPoints || isAllConfirmed;
 
@@ -2954,6 +3273,8 @@
                 lastAreaM2 === null;
 
             copyResultButton.disabled = lastAreaM2 === null;
+            exportCsvButton.disabled = lastAreaM2 === null;
+            saveSelectionDataButton.disabled = !hasSelectionData;
 
             clickModeButton.disabled = isAllConfirmed;
             drawModeButton.disabled = isAllConfirmed;
@@ -3082,6 +3403,36 @@
                     recordOperation(`範囲${index + 1}の名前を変更`);
                 });
 
+                const colorRow = document.createElement('div');
+                colorRow.className = 'area-color-row';
+
+                const colorInput = document.createElement('input');
+                colorInput.type = 'color';
+                colorInput.className = 'area-color-input';
+                colorInput.value = normalizeAreaColor(area.color);
+                colorInput.setAttribute('aria-label', `範囲${index + 1}の色`);
+
+                const colorText = document.createElement('span');
+                colorText.textContent = `範囲色 ${colorInput.value}`;
+
+                colorInput.addEventListener('input', function () {
+                    area.color = normalizeAreaColor(colorInput.value);
+                    colorText.textContent = `範囲色 ${area.color}`;
+
+                    if (area.polygonLayer) {
+                        area.polygonLayer.setStyle(createAreaStyle(area.color, isAllConfirmed));
+                    }
+
+                    updateFixedAreaPopups();
+                });
+
+                colorInput.addEventListener('change', function () {
+                    recordOperation(`${getAreaDisplayName(area, index)}の色を変更`);
+                });
+
+                colorRow.appendChild(colorInput);
+                colorRow.appendChild(colorText);
+
                 const detail = document.createElement('div');
                 detail.className = 'area-item-detail';
                 detail.textContent =
@@ -3115,6 +3466,7 @@
 
                 main.appendChild(title);
                 main.appendChild(nameInput);
+                main.appendChild(colorRow);
                 main.appendChild(detail);
 
                 li.appendChild(main);
@@ -3130,6 +3482,7 @@
 
                     area.polygonLayer.bindPopup(
                         `${escapeHtml(areaName)}<br>` +
+                        `色: ${escapeHtml(area.color)}<br>` +
                         `面積: ${formatResultNumber(area.areaM2)} ㎡<br>` +
                         `周囲: ${formatLength(area.perimeterM)}`
                     );
@@ -3596,6 +3949,7 @@
 
                     lines.push(
                         `${index + 1}. ${areaName}：` +
+                        `色 ${area.color} / ` +
                         `${formatResultNumber(area.areaM2)}㎡ / ` +
                         `${formatResultNumber(area.areaM2 / 1000000)}㎢ / ` +
                         `${formatResultNumber(area.areaM2 / 10000)}ha / ` +
@@ -3619,6 +3973,476 @@
 
         function showManualCopyText(text) {
             window.prompt('自動コピーが使えませんでした。下の内容を Ctrl + C でコピーしてください。', text);
+        }
+
+        function exportResultToCsv() {
+            if (lastAreaM2 === null) {
+                return;
+            }
+
+            const csvText = buildResultCsvText();
+            const fileName = `how-large-is-this-area-result-${createDownloadTimestamp()}.csv`;
+
+            downloadTextFile(
+                '\uFEFF' + csvText,
+                fileName,
+                'text/csv;charset=utf-8'
+            );
+
+            showTemporaryCsvButtonText('CSVを出力しました');
+        }
+
+        function buildResultCsvText() {
+            const comparison = getComparisonTarget();
+            const comparisonCount = comparison.areaM2 > 0 ? lastAreaM2 / comparison.areaM2 : '';
+
+            const rows = [
+                [
+                    '区分',
+                    '番号',
+                    '名前',
+                    '色',
+                    '面積(㎡)',
+                    '面積(㎢)',
+                    '坪',
+                    'ha',
+                    '周囲(m)',
+                    '点数',
+                    '備考'
+                ]
+            ];
+
+            rows.push([
+                '合計',
+                '',
+                '重なり除外後の合計',
+                '',
+                toCsvNumber(lastAreaM2),
+                toCsvNumber(lastAreaM2 / 1000000),
+                toCsvNumber(lastAreaM2 / 3.305785123966942),
+                toCsvNumber(lastAreaM2 / 10000),
+                toCsvNumber(lastUniquePerimeterM || 0),
+                fixedAreas.reduce((sum, area) => sum + area.points.length, 0),
+                comparison.areaM2 > 0 ?
+                    `${comparison.name} 約${formatResultNumber(comparisonCount)}個分` :
+                    '比較対象の面積が未入力または不正'
+            ]);
+
+            if (fixedAreas.length >= 2) {
+                rows.push([
+                    '集計',
+                    '',
+                    '単純合計',
+                    '',
+                    toCsvNumber(lastSimpleAreaM2 || 0),
+                    toCsvNumber((lastSimpleAreaM2 || 0) / 1000000),
+                    toCsvNumber((lastSimpleAreaM2 || 0) / 3.305785123966942),
+                    toCsvNumber((lastSimpleAreaM2 || 0) / 10000),
+                    toCsvNumber(lastTotalPerimeterM || 0),
+                    '',
+                    '範囲別の単純合計'
+                ]);
+
+                rows.push([
+                    '集計',
+                    '',
+                    '重なり分',
+                    '',
+                    toCsvNumber(lastOverlapAreaM2 || 0),
+                    toCsvNumber((lastOverlapAreaM2 || 0) / 1000000),
+                    toCsvNumber((lastOverlapAreaM2 || 0) / 3.305785123966942),
+                    toCsvNumber((lastOverlapAreaM2 || 0) / 10000),
+                    '',
+                    '',
+                    '重複していた面積'
+                ]);
+            }
+
+            fixedAreas.forEach((area, index) => {
+                rows.push([
+                    '範囲',
+                    index + 1,
+                    getAreaDisplayName(area, index),
+                    area.color,
+                    toCsvNumber(area.areaM2),
+                    toCsvNumber(area.areaM2 / 1000000),
+                    toCsvNumber(area.areaM2 / 3.305785123966942),
+                    toCsvNumber(area.areaM2 / 10000),
+                    toCsvNumber(area.perimeterM),
+                    area.points.length,
+                    area.wasDragArea ? 'ドラッグ選択を含む' : 'クリック選択'
+                ]);
+            });
+
+            return rows
+                .map(row => row.map(escapeCsvValue).join(','))
+                .join('\r\n');
+        }
+
+        function toCsvNumber(value) {
+            const number = Number(value);
+
+            if (!Number.isFinite(number)) {
+                return '';
+            }
+
+            return String(cutDownToSecondDecimal(number));
+        }
+
+        function escapeCsvValue(value) {
+            const text = value === null || value === undefined ? '' : String(value);
+            return `"${text.replace(/"/g, '""')}"`;
+        }
+
+        function showTemporaryCsvButtonText(message) {
+            const originalText = exportCsvButton.textContent;
+            exportCsvButton.textContent = message;
+
+            window.setTimeout(function () {
+                exportCsvButton.textContent = originalText;
+            }, 1500);
+        }
+
+        function saveSelectionDataToFile() {
+            if (points.length === 0 && fixedAreas.length === 0) {
+                selectionDataMessage.textContent = '保存する点または範囲がありません。';
+                return;
+            }
+
+            const saveData = createSelectionSaveData();
+            const jsonText = JSON.stringify(saveData, null, 2);
+            const fileName = `how-large-is-this-area-selection-${createDownloadTimestamp()}.json`;
+
+            downloadTextFile(
+                jsonText,
+                fileName,
+                'application/json;charset=utf-8'
+            );
+
+            selectionDataMessage.textContent = '選択データをJSONファイルとして保存しました。';
+        }
+
+        function createSelectionSaveData() {
+            const center = map.getCenter();
+            const comparison = getComparisonTarget();
+
+            return {
+                appName: 'How Large Is This Area',
+                dataVersion: selectionDataVersion,
+                savedAt: new Date().toISOString(),
+                map: {
+                    center: {
+                        lat: center.lat,
+                        lng: center.lng
+                    },
+                    zoom: map.getZoom(),
+                    baseLayerName: currentBaseLayerName
+                },
+                currentSelection: {
+                    points: points.map(p => ({ lat: p.lat, lng: p.lng })),
+                    markerFlags: markers.map(marker => marker !== null),
+                    selectionMode: selectionMode,
+                    lastSelectionMode: lastSelectionMode,
+                    wasDragArea: currentAreaHasDragPoint,
+                    color: currentAreaColor
+                },
+                fixedAreas: fixedAreas.map(area => ({
+                    name: area.name,
+                    color: area.color,
+                    points: area.points.map(p => ({ lat: p.lat, lng: p.lng })),
+                    markerFlags: area.markerFlags.map(flag => flag),
+                    selectionMode: area.selectionMode,
+                    lastSelectionMode: area.lastSelectionMode,
+                    wasDragArea: area.wasDragArea
+                })),
+                isAllConfirmed: isAllConfirmed,
+                comparison: {
+                    selectedValue: comparisonSelect.value,
+                    customName: customName.value,
+                    customArea: customArea.value,
+                    resolvedName: comparison.name,
+                    resolvedAreaM2: comparison.areaM2
+                }
+            };
+        }
+
+        async function handleSelectionDataFileSelected(event) {
+            const file = event.target.files && event.target.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            selectionDataMessage.textContent = '選択データを読み込んでいます。';
+
+            try {
+                const text = await readFileAsText(file);
+                const data = JSON.parse(text);
+
+                validateSelectionSaveData(data);
+
+                const hasCurrentData = points.length > 0 || fixedAreas.length > 0 || isAllConfirmed;
+
+                if (hasCurrentData && !window.confirm('現在の点、範囲、計算結果、操作履歴を置き換えて選択データを読み込みますか？')) {
+                    selectionDataMessage.textContent = '読み込みをキャンセルしました。';
+                    return;
+                }
+
+                applySelectionSaveData(data);
+                selectionDataMessage.textContent = `「${file.name}」を読み込みました。`;
+            } catch (error) {
+                console.error(error);
+                selectionDataMessage.textContent = `読み込みに失敗しました。${error.message || 'JSONファイルの内容を確認してください。'}`;
+            } finally {
+                selectionDataFileInput.value = '';
+            }
+        }
+
+        function readFileAsText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.addEventListener('load', function () {
+                    resolve(String(reader.result || ''));
+                });
+
+                reader.addEventListener('error', function () {
+                    reject(new Error('ファイルを読み取れませんでした。'));
+                });
+
+                reader.readAsText(file, 'UTF-8');
+            });
+        }
+
+        function validateSelectionSaveData(data) {
+            if (!data || typeof data !== 'object') {
+                throw new Error('JSONデータの形式が正しくありません。');
+            }
+
+            if (typeof data.dataVersion !== 'number') {
+                throw new Error('データのバージョン情報がありません。');
+            }
+
+            if (data.dataVersion > selectionDataVersion) {
+                throw new Error('このファイルは新しい形式で保存されています。');
+            }
+
+            if (!data.currentSelection || !Array.isArray(data.currentSelection.points)) {
+                throw new Error('現在選択中の点データがありません。');
+            }
+
+            if (!Array.isArray(data.fixedAreas)) {
+                throw new Error('設定済み範囲のデータが正しくありません。');
+            }
+
+            validateSavedPointArray(data.currentSelection.points, false);
+
+            data.fixedAreas.forEach((area, index) => {
+                if (!area || !Array.isArray(area.points)) {
+                    throw new Error(`範囲${index + 1}の点データが正しくありません。`);
+                }
+
+                validateSavedPointArray(area.points, true);
+            });
+        }
+
+        function validateSavedPointArray(savedPoints, requireThreePoints) {
+            if (requireThreePoints && savedPoints.length < 3) {
+                throw new Error('設定済み範囲には3点以上必要です。');
+            }
+
+            savedPoints.forEach(point => {
+                const lat = Number(point.lat);
+                const lng = Number(point.lng);
+
+                if (!Number.isFinite(lat) || !Number.isFinite(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+                    throw new Error('緯度または経度に不正な値があります。');
+                }
+            });
+        }
+
+        function applySelectionSaveData(data) {
+            isRestoringHistory = true;
+
+            removeCurrentDrawingLayers();
+
+            points.length = 0;
+            markers.length = 0;
+            fixedAreas.length = 0;
+
+            clearLastResultValues();
+
+            isDrawing = false;
+            isDraggingPoint = false;
+            activeDrawPointerId = null;
+            currentDragPointCount = 0;
+
+            const currentSelection = data.currentSelection;
+
+            selectionMode = currentSelection.selectionMode || 'click';
+            lastSelectionMode = currentSelection.lastSelectionMode || 'click';
+            currentAreaHasDragPoint = currentSelection.wasDragArea || false;
+            currentAreaColor = currentSelection.color ? normalizeAreaColor(currentSelection.color) : null;
+
+            const markerFlags = Array.isArray(currentSelection.markerFlags) ?
+                currentSelection.markerFlags :
+                [];
+
+            currentSelection.points.forEach((p, index) => {
+                const latlng = L.latLng(Number(p.lat), Number(p.lng));
+                points.push(latlng);
+
+                if (markerFlags[index]) {
+                    markers.push(createPointMarker(latlng));
+                } else {
+                    markers.push(null);
+                }
+            });
+
+            data.fixedAreas.forEach((areaData, index) => {
+                const areaPoints = areaData.points.map(p => L.latLng(Number(p.lat), Number(p.lng)));
+                const featureCollection = createFeatureCollectionForCurrentArea(areaPoints);
+                const areaM2 = calculateFeatureCollectionArea(featureCollection);
+                const perimeterM = calculateFeatureCollectionPerimeterM(featureCollection);
+                const areaColor = normalizeAreaColor(areaData.color || getDefaultAreaColor(index));
+                const areaName = typeof areaData.name === 'string' && areaData.name.trim().length > 0 ?
+                    areaData.name :
+                    `範囲${index + 1}`;
+
+                const polygonLayer = L.geoJSON(featureCollection, {
+                    style: createAreaStyle(areaColor, Boolean(data.isAllConfirmed))
+                }).addTo(map);
+
+                const savedMarkerFlags = Array.isArray(areaData.markerFlags) ?
+                    areaData.markerFlags :
+                    areaPoints.map(() => false);
+
+                fixedAreas.push({
+                    name: areaName,
+                    color: areaColor,
+                    points: areaPoints,
+                    markerFlags: savedMarkerFlags.map(flag => Boolean(flag)),
+                    selectionMode: areaData.selectionMode || 'click',
+                    lastSelectionMode: areaData.lastSelectionMode || 'click',
+                    wasDragArea: areaData.wasDragArea || false,
+                    polygonLayer: polygonLayer,
+                    featureCollection: cloneGeoJson(featureCollection),
+                    areaM2: areaM2,
+                    perimeterM: perimeterM
+                });
+            });
+
+            isAllConfirmed =
+                Boolean(data.isAllConfirmed) &&
+                fixedAreas.length > 0 &&
+                points.length === 0;
+
+            fixedAreas.forEach(area => {
+                area.polygonLayer.setStyle(createAreaStyle(area.color, isAllConfirmed));
+            });
+
+            restoreComparisonFromSelectionData(data.comparison);
+
+            if (data.map && data.map.baseLayerName && baseMapLayers[data.map.baseLayerName]) {
+                switchBaseLayer(data.map.baseLayerName);
+            }
+
+            if (
+                data.map &&
+                data.map.center &&
+                Number.isFinite(Number(data.map.center.lat)) &&
+                Number.isFinite(Number(data.map.center.lng))
+            ) {
+                const zoom = Number.isFinite(Number(data.map.zoom)) ?
+                    Math.min(20, Math.max(2, Number(data.map.zoom))) :
+                    18;
+
+                map.setView(
+                    [
+                        Number(data.map.center.lat),
+                        Number(data.map.center.lng)
+                    ],
+                    zoom
+                );
+            }
+
+            refreshAllPointMarkers();
+            drawOpenLine();
+
+            if (isAllConfirmed) {
+                releaseSelectionMode();
+                updateCalculatedTotals();
+                showResult(lastAreaM2);
+            } else {
+                setSelectionMode(selectionMode === 'none' ? lastSelectionMode : selectionMode);
+                result.innerHTML = '選択データを読み込みました。必要に応じて編集し、「次の範囲を設定」または「エリア確定」を押してください。';
+            }
+
+            updateAreaList();
+            updatePointList();
+            updateButtons();
+            updateModeOverlay();
+
+            isRestoringHistory = false;
+            resetOperationTimeline('選択データ読み込み直後');
+        }
+
+        function restoreComparisonFromSelectionData(comparisonData) {
+            if (!comparisonData || typeof comparisonData !== 'object') {
+                handleComparisonSelectionChanged();
+                return;
+            }
+
+            const selectedValue = String(comparisonData.selectedValue || '');
+            const optionExists = Array.from(comparisonSelect.options).some(option => option.value === selectedValue);
+
+            if (optionExists) {
+                comparisonSelect.value = selectedValue;
+
+                if (selectedValue === 'custom') {
+                    customName.value = comparisonData.customName || comparisonData.resolvedName || '';
+                    customArea.value = comparisonData.customArea || comparisonData.resolvedAreaM2 || '';
+                }
+            } else {
+                comparisonSelect.value = 'custom';
+                customName.value = comparisonData.resolvedName || comparisonData.customName || '';
+                customArea.value = comparisonData.resolvedAreaM2 || comparisonData.customArea || '';
+            }
+
+            handleComparisonSelectionChanged();
+        }
+
+        function downloadTextFile(content, fileName, mimeType) {
+            const blob = new Blob([content], {
+                type: mimeType
+            });
+
+            const objectUrl = URL.createObjectURL(blob);
+            const anchor = document.createElement('a');
+
+            anchor.href = objectUrl;
+            anchor.download = fileName;
+            anchor.style.display = 'none';
+
+            document.body.appendChild(anchor);
+            anchor.click();
+            anchor.remove();
+
+            window.setTimeout(function () {
+                URL.revokeObjectURL(objectUrl);
+            }, 1000);
+        }
+
+        function createDownloadTimestamp() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hour = String(now.getHours()).padStart(2, '0');
+            const minute = String(now.getMinutes()).padStart(2, '0');
+            const second = String(now.getSeconds()).padStart(2, '0');
+
+            return `${year}${month}${day}-${hour}${minute}${second}`;
         }
 
         function releaseSelectionMode() {
@@ -3645,7 +4469,7 @@
 
         function escapeHtml(text) {
             const div = document.createElement('div');
-            div.textContent = text;
+            div.textContent = String(text ?? '');
             return div.innerHTML;
         }
     </script>
